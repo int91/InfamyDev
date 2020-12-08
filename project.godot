@@ -29,6 +29,10 @@ config/icon="res://icon.png"
 GunDatabase="*res://Scripts/Databases/GunDatabase.gd"
 AttachmentDatabase="*res://Scripts/Databases/AttachmentDatabase.gd"
 
+[display]
+
+window/stretch/aspect="keep"
+
 [input]
 
 moveRight={
