@@ -6,11 +6,11 @@ var moveSpeed = 10
 var walkMoveSpeed = 10
 var sprintMoveSpeed = 14
 var slideMoveSpeed = 17
-var dashMoveSpeed = 130
+var dashMoveSpeed = 145
 var moveDirection:Vector2 = Vector2(0, 0)
-var canMove = true
 var isSliding = false
-var hasDashed = false
+var canMove = true
+var canDash = false
 var canInteract = false
 
 var Inventory = {
@@ -41,12 +41,15 @@ func _ready() -> void:
 	pass
 
 func _process(_delta: float) -> void:
-	_weaponcontrol()
-	_movement()
-	_spritecontrol()
+	#_weaponcontrol()
+	#_movement()
+	#_spritecontrol()
 	pass
 
 func _physics_process(delta: float) -> void:
+	_movement()
+	_weaponcontrol()
+	_spritecontrol()
 	if (Input.is_action_just_pressed("ui_right")):
 		get_tree().change_scene("res://Scenes/Maps/ZombiesTest.tscn")
 		pass
@@ -73,9 +76,9 @@ func _movement():
 		moveSpeed = sprintMoveSpeed
 	else:
 		moveSpeed = walkMoveSpeed
-	if (Input.is_action_pressed("moveDash") && !isSliding && !hasDashed && canMove):
+	if (Input.is_action_pressed("moveDash") && !isSliding && !canDash && canMove):
 		moveSpeed = dashMoveSpeed
-		hasDashed = true
+		canDash = true
 		$dashTimer.start(2)
 		pass
 	if (Input.is_action_just_pressed("moveSlide") && !isSliding && canMove):
@@ -121,5 +124,5 @@ func _on_slidingTimer_timeout() -> void:
 
 
 func _on_dashTimer_timeout() -> void:
-	hasDashed = false
+	canDash = false
 	pass

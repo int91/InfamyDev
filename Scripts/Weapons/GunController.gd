@@ -27,7 +27,7 @@ func _ready() -> void:
 	#self.stats = GunDatabase._getgun("Car15")
 	pass 
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	_gunInput()
 	if (Input.is_action_pressed("fire1") && canShoot):
 		if (self.stats["ammo"] > 0):

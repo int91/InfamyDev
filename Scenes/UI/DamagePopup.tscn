@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/UI/DamagePopup.gd" type="Script" id=1]
+
+[node name="DamagePopup" type="RichTextLabel"]
+margin_right = 95.0
+margin_bottom = 15.0
+bbcode_enabled = true
+bbcode_text = "[center]Yo[/center]"
+text = "Yo"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="fadeTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Tween" type="Tween" parent="."]
+[connection signal="timeout" from="fadeTimer" to="." method="_on_fadeTimer_timeout"]
+[connection signal="tween_completed" from="Tween" to="." method="_on_Tween_tween_completed"]

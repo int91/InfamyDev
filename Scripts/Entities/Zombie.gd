@@ -3,7 +3,7 @@ extends Enemy
 func _ready() -> void:
 	pass 
 	
-func _process(delta: float) -> void:
+func _physics_process(delta):
 	pass
 
 func _takeDamage(damage):

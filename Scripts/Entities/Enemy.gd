@@ -1,6 +1,8 @@
 extends KinematicBody2D
 class_name Enemy
 
+onready var rootWorld = get_node("/root/World/")
+onready var damagePopup = preload("res://Scenes/UI/DamagePopup.tscn")
 onready var player = get_node("/root/World/Player")
 export var speed = 10
 var health = 100
@@ -13,7 +15,7 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if self.health <= 0:
 		_kill()
 	# refresh the points in the path
@@ -31,6 +33,10 @@ func _process(delta: float) -> void:
 
 func _takeDamage(damage):
 	self.health -= damage
+	var dp = damagePopup.instance()
+	dp.set_global_position(self.get_global_position())
+	dp.bbcode_text = ("[center]" + str(damage) + "[/center]")
+	rootWorld.add_child(dp)
 	pass
 
 func _kill():
