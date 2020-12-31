@@ -8,9 +8,16 @@ scale = Vector2( 0.882135, 0.166658 )
 texture = ExtResource( 1 )
 script = ExtResource( 2 )
 
+[node name="firstShotTimer" type="Timer" parent="."]
+
+[node name="reloadTimer" type="Timer" parent="."]
+one_shot = true
+
 [node name="shootTimer" type="Timer" parent="."]
 one_shot = true
 
 [node name="shootPoint" type="Position2D" parent="."]
 position = Vector2( 33, 0 )
+[connection signal="timeout" from="firstShotTimer" to="." method="_on_firstShotTimer_timeout"]
+[connection signal="timeout" from="reloadTimer" to="." method="_on_reloadTimer_timeout"]
 [connection signal="timeout" from="shootTimer" to="." method="_on_shootTimer_timeout"]

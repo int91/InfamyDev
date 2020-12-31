@@ -4,11 +4,12 @@ enum Firemodes {semi, auto, burst, shotgun}
 enum Types {primary, secondary, all}
 
 var GunData = {
-	"Car15":{
+	"1":{
 		"name":"CAR-15",
 		"damage":30,
 		"ammo":30,
 		"maxAmmo":30,
+		"reserveAmmo":240,
 		"minRecoilDisplacement":0.1,
 		"maxRecoilDisplacement":0.25,
 		"firerate":0.1,
@@ -16,6 +17,7 @@ var GunData = {
 		"firemode":Firemodes.auto,
 		"type":Types.primary,
 		"reloadTime":1,
+		"reloadSpeed":1,
 		"sightAttachment":null,
 		"magAttachment":null,
 		"barrelAttachment":null,
@@ -24,13 +26,17 @@ var GunData = {
 		"ammotypeAttachment":null,
 		"attachmentsChecked":false,
 		"unlockLevel":0,
-		"salePrice":6000
+		"salePrice":6000,
+		"sprite":"res://icon.png",
+		"scaleX":0,
+		"scaleY":0
 	},
-	"Ree45":{
+	"2":{
 		"name":"RE-45",
 		"damage":39,
 		"ammo":15,
 		"maxAmmo":15,
+		"reserveAmmo":120,
 		"minRecoilDisplacement":0.15,
 		"maxRecoilDisplacement":0.45,
 		"firerate":0.05,
@@ -38,6 +44,7 @@ var GunData = {
 		"firemode":Firemodes.auto,
 		"type":Types.primary,
 		"reloadTime":1,
+		"reloadSpeed":1,
 		"sightAttachment":"red_dot_1",
 		"magAttachment":"extended_pistol_0",
 		"barrelAttachment":null,
@@ -46,14 +53,18 @@ var GunData = {
 		"ammotypeAttachment":"hp_ap_combo_0",
 		"attachmentsChecked":false,
 		"unlockLevel":0,
-		"salePrice":12000
+		"salePrice":12000,
+		"sprite":"res://icon.png",
+		"scaleX":0,
+		"scaleY":0
 	},
 	#This is the gun for when a gun that's being searched can't be found or doesn't exist.
-	"NoGunFound":{
+	"0":{
 		"name":"ERROR: NO GUN FOUND",
 		"damage":0,
 		"ammo":0,
 		"maxAmmo":0,
+		"reserveAmmo":120,
 		"minRecoilDisplacement":0.1,
 		"maxRecoilDisplacement":0.25,
 		"firerate":0.1,
@@ -61,6 +72,7 @@ var GunData = {
 		"firemode":Firemodes.auto,
 		"type":Types.all,
 		"reloadTime":1,
+		"reloadSpeed":1,
 		"sightAttachment":null,
 		"magAttachment":null,
 		"barrelAttachment":null,
@@ -69,7 +81,10 @@ var GunData = {
 		"ammotypeAttachment":null,
 		"attachmentsChecked":false,
 		"unlockLevel":0,
-		"salePrice":0
+		"salePrice":0,
+		"sprite":"res://icon.png",
+		"scaleX":0,
+		"scaleY":0
 	}
 }
 
@@ -78,5 +93,5 @@ func _getgun(ID):
 	if ID in GunData:
 		return GunData[ID]
 	else:
-		return GunData["NoGunFound"]
+		return GunData["0"]
 	pass

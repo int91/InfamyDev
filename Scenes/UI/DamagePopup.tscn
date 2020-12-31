@@ -6,7 +6,7 @@
 margin_right = 95.0
 margin_bottom = 15.0
 bbcode_enabled = true
-bbcode_text = "[center]Yo[/center]"
+bbcode_text = "[color=red][center]Yo[/center][/color]"
 text = "Yo"
 script = ExtResource( 1 )
 __meta__ = {

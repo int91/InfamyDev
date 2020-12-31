@@ -8,12 +8,12 @@ func _physics_process(delta):
 
 func _takeDamage(damage):
 	self.health -= damage
-	player.Inventory.zombieMoney += 10
+	PlayerData.Inventory.zombieMoney += 10
 	pass
 
 func _kill():
 	self.queue_free()
 	get_node("/root/World").zombiesKilled += 1
-	player.Inventory.zombieKills += 1
-	player.Inventory.zombieMoney += 60
+	PlayerData.Inventory.zombieKills += 1
+	PlayerData.Inventory.zombieMoney += 60
 	pass

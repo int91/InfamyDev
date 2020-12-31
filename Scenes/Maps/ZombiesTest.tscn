@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scenes/Entities/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/ProgrammerArt/call.png" type="Texture" id=2]
 [ext_resource path="res://Scenes/Weapons/Guns/GunTest.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scripts/Maps/ZombiesManager.gd" type="Script" id=4]
 [ext_resource path="res://Scenes/Entities/Zombie.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Entities/RandomBox.tscn" type="PackedScene" id=6]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 532.315, 1646.3, -1809.31, 382.926, -2256.51, -887.971, -938.468, -1510.23, 2344.72, -955.781, 1974.72, 379.562 )
@@ -46,5 +47,8 @@ position = Vector2( 0, -1000 )
 
 [node name="Enemy" parent="." instance=ExtResource( 5 )]
 position = Vector2( 54.7035, -442.385 )
+
+[node name="RandomBox" parent="." instance=ExtResource( 6 )]
+position = Vector2( -152.549, 29.3907 )
 [connection signal="timeout" from="roundIntervalTimer" to="." method="_on_roundIntervalTimer_timeout"]
 [connection signal="timeout" from="zombieSpawnInterval" to="." method="_on_zombieSpawnInterval_timeout"]

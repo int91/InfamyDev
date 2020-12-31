@@ -2,41 +2,13 @@ extends KinematicBody2D
 
 onready var gunNode = get_node("TestGun")
 
-var moveSpeed = 10
-var walkMoveSpeed = 10
-var sprintMoveSpeed = 14
-var slideMoveSpeed = 17
-var dashMoveSpeed = 145
-var moveDirection:Vector2 = Vector2(0, 0)
-var isSliding = false
-var canMove = true
-var canDash = false
-var canInteract = false
-
-var Inventory = {
-	"moneyUSD":0,
-	"moneyGC":0,
-	"zombieMoney":0,
-	"zombieKills":0,
-	"kills":0,
-	"level":0,
-	"currentExp":0,
-	"expToLevel":0,
-	"equippedGun":1,
-	"guns":[],
-	"safehouseGuns":[],
-	"ammo":
-		{
-			"smg":"0",
-			"ar":"0",
-			"secondary":"0"
-		}
-}
-
+#NOTE: The ammo variable in the player data is ammo stored int the safehouse
+#TODO: Make a way to move that to inventory / gun thing
 func _ready() -> void:
-	Inventory.guns.append(GunDatabase._getgun("Car15")) 
-	Inventory.guns.append(GunDatabase._getgun("Ree45")) 
-	gunNode.stats = Inventory.guns[0]
+	PlayerData.Inventory.guns.append(GunDatabase._getgun("1")) 
+	PlayerData.Inventory.guns.append(GunDatabase._getgun("2")) 
+	gunNode.stats = PlayerData.Inventory.guns[0]
+	#gunNode.stats = Inventory.guns[1]
 	print(gunNode.stats)
 	pass
 
@@ -57,51 +29,53 @@ func _physics_process(delta: float) -> void:
 
 #Controls player movement and makes the player look at the mouse
 func _movement():
-	if (!isSliding):
-		moveDirection = Vector2(0, 0)
+	if (!PlayerData.isSliding):
+		PlayerData.moveDirection = Vector2(0, 0)
 		pass
-	if (Input.is_action_pressed("moveRight") && !isSliding && canMove):
-		moveDirection.x = 1
+	if (Input.is_action_pressed("moveRight") && !PlayerData.isSliding && PlayerData.canMove):
+		PlayerData.moveDirection.x = 1
 		pass
-	if (Input.is_action_pressed("moveLeft") && !isSliding && canMove):
-		moveDirection.x = -1
+	if (Input.is_action_pressed("moveLeft") && !PlayerData.isSliding && PlayerData.canMove):
+		PlayerData.moveDirection.x = -1
 		pass
-	if (Input.is_action_pressed("moveUp") && !isSliding && canMove):
-		moveDirection.y = -1
+	if (Input.is_action_pressed("moveUp") && !PlayerData.isSliding && PlayerData.canMove):
+		PlayerData.moveDirection.y = -1
 		pass
-	if (Input.is_action_pressed("moveDown") && !isSliding && canMove):
-		moveDirection.y = 1
+	if (Input.is_action_pressed("moveDown") && !PlayerData.isSliding && PlayerData.canMove):
+		PlayerData.moveDirection.y = 1
 		pass
-	if (Input.is_action_pressed("moveSprint") && !isSliding && canMove):
-		moveSpeed = sprintMoveSpeed
+	if (Input.is_action_pressed("moveSprint") && !PlayerData.isSliding && PlayerData.canMove):
+		PlayerData.moveSpeed = PlayerData.sprintMoveSpeed
 	else:
-		moveSpeed = walkMoveSpeed
-	if (Input.is_action_pressed("moveDash") && !isSliding && !canDash && canMove):
-		moveSpeed = dashMoveSpeed
-		canDash = true
+		PlayerData.moveSpeed = PlayerData.walkMoveSpeed
+	if (Input.is_action_pressed("moveDash") && !PlayerData.isSliding && !PlayerData.canDash && PlayerData.canMove):
+		PlayerData.moveSpeed = PlayerData.dashMoveSpeed
+		PlayerData.canDash = true
 		$dashTimer.start(2)
 		pass
-	if (Input.is_action_just_pressed("moveSlide") && !isSliding && canMove):
-		isSliding = true
+	if (Input.is_action_just_pressed("moveSlide") && !PlayerData.isSliding && PlayerData.canMove):
+		PlayerData.isSliding = true
 		$slidingTimer.start(0.7)
 		pass
-	if (isSliding):
-		moveSpeed = slideMoveSpeed
+	if (PlayerData.isSliding):
+		PlayerData.moveSpeed = PlayerData.slideMoveSpeed
+		pass
+	if (Input.is_action_just_pressed("interact") && PlayerData.canInteract && PlayerData.objectToInteract != null):
 		pass
 	#look_at(get_global_mouse_position())
-	move_and_collide(moveDirection * moveSpeed)
+	move_and_collide(PlayerData.moveDirection * PlayerData.moveSpeed)
 	pass
 
 func _weaponcontrol():
-	if (Input.is_action_just_pressed("key_1") && Inventory.equippedGun == 2):
-		Inventory.guns[1] = gunNode.stats
-		gunNode.stats = Inventory.guns[0]
-		Inventory.equippedGun = 1
+	if (Input.is_action_just_pressed("key_1") && PlayerData.Inventory.equippedGun == 2):
+		PlayerData.Inventory.guns[1] = gunNode.stats
+		gunNode.stats = PlayerData.Inventory.guns[0]
+		PlayerData.Inventory.equippedGun = 1
 		pass
-	if (Input.is_action_just_pressed("key_2") && Inventory.equippedGun == 1):
-		Inventory.guns[0] = gunNode.stats
-		gunNode.stats = Inventory.guns[1]
-		Inventory.equippedGun = 2
+	if (Input.is_action_just_pressed("key_2") && PlayerData.Inventory.equippedGun == 1):
+		PlayerData.Inventory.guns[0] = gunNode.stats
+		gunNode.stats = PlayerData.Inventory.guns[1]
+		PlayerData.Inventory.equippedGun = 2
 		gunNode._checkAttachments()
 		pass
 	pass
@@ -119,10 +93,10 @@ func _spritecontrol():
 
 
 func _on_slidingTimer_timeout() -> void:
-	isSliding = false
+	PlayerData.isSliding = false
 	pass
 
 
 func _on_dashTimer_timeout() -> void:
-	canDash = false
+	PlayerData.canDash = false
 	pass

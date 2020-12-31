@@ -9,6 +9,7 @@ enum Firemodes {semi, auto, burst, shotgun}
 enum Types {primary, secondary, all}
 
 var canShoot = true
+var firstShot = true
 var shots = 0
 
 var attachmentSlotNames = ["sightAttachment", "magAttachment", "barrelAttachment", "stockAttachment", "underbarrelAttachment", "ammotypeAttachment"]
@@ -18,8 +19,7 @@ var stats = {
 
 }
 
-#TODO: ADD RELOADING
-#TESTING / REMAKE: MAKE A WAY FOR THE GUNS TO HAVE ATTACHMENTS CHECKED WITHOUT ADDING STATS
+#TESTING / RECODE: MAKE A WAY FOR THE GUNS TO HAVE ATTACHMENTS CHECKED WITHOUT ADDING STATS
 #PLACEHOLDER IS THE attachmentsChecked - Check
 
 func _ready() -> void:
@@ -35,6 +35,10 @@ func _physics_process(delta: float) -> void:
 			canShoot = false
 			$shootTimer.start((self.stats["firerate"]))
 			pass
+	if (Input.is_action_just_pressed("reload") && $reloadTimer.is_stopped() && self.stats["ammo"] < self.stats["maxAmmo"]):
+		$reloadTimer.start(self.stats["reloadTime"] * self.stats["reloadSpeed"])
+		canShoot = false
+		pass
 	pass
 
 func _gunInput():
@@ -55,9 +59,16 @@ func _spawnBullet():
 	
 	var distanceFromMe =  self.stats["barrelOffset"]
 	var spawnPoint = shootPoint
-	
-	var lowSpread = rand_range(self.rotation -  self.stats["minRecoilDisplacement"], self.rotation +  self.stats["minRecoilDisplacement"])
-	var highSpread = rand_range(self.rotation - self.stats["maxRecoilDisplacement"], self.rotation +  self.stats["maxRecoilDisplacement"])
+	var lowSpread
+	var highSpread
+	if (!firstShot):
+		lowSpread = rand_range(self.rotation -  self.stats["minRecoilDisplacement"], self.rotation +  self.stats["minRecoilDisplacement"])
+		highSpread = rand_range(self.rotation - self.stats["maxRecoilDisplacement"], self.rotation +  self.stats["maxRecoilDisplacement"])
+	else:
+		lowSpread = rand_range(self.rotation, self.rotation)
+		highSpread = rand_range(self.rotation, self.rotation)
+		firstShot = false
+		$firstShotTimer.start(0.45)
 	
 	var bullet = bulletScene.instance()
 	bullet.rotation = rand_range(lowSpread, highSpread)
@@ -93,4 +104,21 @@ func _checkAttachments():
 
 func _on_shootTimer_timeout() -> void:
 	self.canShoot = true
+	pass
+
+
+func _on_reloadTimer_timeout():
+	var toReload = self.stats["maxAmmo"] - self.stats["ammo"]
+	if (self.stats["reserveAmmo"] > toReload && self.stats["reserveAmmo"] > 0):
+		self.stats["ammo"] += toReload
+		self.stats["reserveAmmo"] -= toReload
+	else:
+		self.stats["ammo"] += self.stats["reserveAmmo"]
+		self.stats["reserveAmmo"] = 0
+	canShoot = true
+	pass
+
+
+func _on_firstShotTimer_timeout():
+	firstShot = true
 	pass

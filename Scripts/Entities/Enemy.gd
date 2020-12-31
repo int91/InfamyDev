@@ -9,12 +9,9 @@ var health = 100
 const eps = 1
 var points = []
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	pass
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
 	if self.health <= 0:
 		_kill()
@@ -35,7 +32,7 @@ func _takeDamage(damage):
 	self.health -= damage
 	var dp = damagePopup.instance()
 	dp.set_global_position(self.get_global_position())
-	dp.bbcode_text = ("[center]" + str(damage) + "[/center]")
+	dp.bbcode_text = ("[color=red][center]" + str(damage) + "[/center][/color]")
 	rootWorld.add_child(dp)
 	pass
 
