@@ -1,13 +1,24 @@
-# InfamyDev
-Development Github for Infamy
+# Infamy Development
+Infamy is a prototype for a full scale game.
 
-This was a prototype for a game that I wanted to work on in the Godot engine.
+Infamy was planned to be similar to the game Payday 2, except it would be top-down and have hardcore gameplay elements.
 
-It was planned to be similar to the game Payday 2 but it would be top-down and have hardcore elements.
-Those elements were: lose items upon death (only the items you carry into a heist); get hit a few times and dye; and killing civilians grants a higher bounty therefore making easier difficulties harder.
+The planned hardcore elements / features were: 
+* lose items upon death (only the items you carry into a heist).
+* killing civilians grants a higher bounty therefore making easier difficulties harder (except the easiest difficulty).
 
-The features I planned to implement were as follows (not counting above features): Heists / Raids system (You pick what you want to play - with infinite replayability); AI Enemies; Advanced and Realistic Gun System (attachments, recoil, etc.); Shop System (to buy and sell just about anything); Homebase system (acts as your safehome where you can customize and test new weapons, access the shop, change your skills, etc.); Skill System (This would be similar to Payday 2); Multiplayer (with up to 3 friends); Custom Mods (with a very easy to use API); And the ability to customize any element of the game (ui, difficulty, enemy color, etc.)
+List of all other planned features:
+* Heist / Raid System - The player picks the level / mission they want to play.
+* Multiple Enemy Types - A strong slow enemy, weaker fast enemy.
+* Complex and Realistic Gun System - Complete with a customization system, recoil patterns, reloading, limited ammunition, etc.
+* Shop System - To buy and sell every item in the game.
+* Skill System - Similar to Payday 2's skill system but with more skills to choose from.
+* Homebase System - Acts as a safehouse to access the shop, workbench to customize guns and craft items, change your skills, etc.
+* Multiplayer - Up to 3 friends.
+* Custom Mods - So the player can make their own items, heists, etc.
 
-This game was essentailly a testing ground for a game with great potential. Although right now it's just a testing ground for a decent gun system.
+Infamy eventaully turned into a testing ground for a game with great potential.
 
-The weapon data ended up being stored in a giant dictionary database that holds all the info for each weapon and I had seperate database for items and attachements to help with organization.
+The gun system is finished, working, and can be tested by anyone at any point.
+
+The data for all the items in the game are stored in dictionaries based on categories. Guns are stored in the guns dictionary, while attachments are stored in an attachment dictionary.
