@@ -9,3 +9,5 @@ Those elements were: lose items upon death (only the items you carry into a heis
 The features I planned to implement were as follows (not counting above features): Heists / Raids system (You pick what you want to play - with infinite replayability); AI Enemies; Advanced and Realistic Gun System (attachments, recoil, etc.); Shop System (to buy and sell just about anything); Homebase system (acts as your safehome where you can customize and test new weapons, access the shop, change your skills, etc.); Skill System (This would be similar to Payday 2); Multiplayer (with up to 3 friends); Custom Mods (with a very easy to use API); And the ability to customize any element of the game (ui, difficulty, enemy color, etc.)
 
 This game was essentailly a testing ground for a game with great potential. Although right now it's just a testing ground for a decent gun system.
+
+The weapon data ended up being stored in a giant dictionary database that holds all the info for each weapon and I had seperate database for items and attachements to help with organization.
